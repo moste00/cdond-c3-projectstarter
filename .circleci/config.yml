@@ -11,8 +11,8 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-            aws cloudformation delete-stack --stack-name "udapeople-frontend-${workflow-ID}"
-            aws cloudformation delete-stack --stack-name "udapeople-backend-${workflow-ID}"
+            aws cloudformation delete-stack --stack-name "udapeople-frontend-${workflow-ID}" --region=us-east-1
+            aws cloudformation delete-stack --stack-name "udapeople-backend-${workflow-ID}"  --region=us-east-1
 
 #   revert-migrations:
 #     description: Revert the last migration if successfully run in the current workflow.
@@ -157,7 +157,7 @@ jobs:
               --template-file .circleci/files/backend.yml \
               --tags project=uda-people \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  --region=us-east-1
       - run:
           name: Ensure front-end infrastructure exist
           command: |
@@ -165,11 +165,11 @@ jobs:
               --template-file .circleci/files/frontend.yml \
               --tags project=uda-people \
               --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" 
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" --region=us-east-1
       - run:
           name: Add back-end ip to ansible inventory
           command: |
-            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text \
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text --region=us-east-1 \
               >> ./.circleci/ansible/inventory.txt
       - persist_to_workspace:
           root: ~/
