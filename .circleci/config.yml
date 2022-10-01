@@ -191,6 +191,7 @@ jobs:
           command: |
             yum install -y tar 
             yum install -y gzip
+            yum install -y python3
             python3 -m pip install --upgrade --user ansible 
       - attach_workspace:
           at: /tmp/workspace
