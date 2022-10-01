@@ -186,14 +186,14 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "49:97:14:56:fa:64:ac:5e:ce:f8:3a:b2:e6:4c:a3:9e"
-      - attach_workspace:
-          at: /tmp/workspace
       - run:
           name: Install dependencies
           command: |
             yum install -y tar 
             yum install -y gzip
             python3 -m pip install --upgrade --user ansible 
+      - attach_workspace:
+          at: /tmp/workspace
       - run:
           name: Configure server
           command: |
