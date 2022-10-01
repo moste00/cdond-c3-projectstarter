@@ -189,6 +189,7 @@ jobs:
           command: |
             yum install -y openssh
             yum install -y openssh-server
+            yum install -y openssh-client
             yum install -y tar 
             yum install -y gzip
             yum install -y python3
