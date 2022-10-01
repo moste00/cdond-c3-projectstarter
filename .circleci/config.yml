@@ -184,17 +184,18 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "e6:5f:a3:bc:ca:6d:78:60:6b:37:07:fd:c1:ea:44:c8"
       - run:
           name: Install dependencies
           command: |
-            ssh --version
+            yum install -y openssh
+            yum install -y openssh-server
             yum install -y tar 
             yum install -y gzip
             yum install -y python3
             python3 -m pip install --upgrade --user ansible 
+      - add_ssh_keys:
+          fingerprints:
+            - "e6:5f:a3:bc:ca:6d:78:60:6b:37:07:fd:c1:ea:44:c8"
       - attach_workspace:
           at: /tmp/workspace
       - run:
