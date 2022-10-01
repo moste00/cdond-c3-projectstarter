@@ -16,7 +16,4 @@
     update_cache: yes
 
 - name: "Install pm2"
-  apt:
-    name: pm2
-    state: latest
-    update_cache: yes
+  shell: npm install pm2 -g
