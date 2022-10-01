@@ -1,19 +1,22 @@
-- name: "Update all packages"
+- name: Upgrade all packages 
   apt:
-    name: "*"
-    state: latest
+    upgrade: dist
+    force_apt_get: yes
 
 - name: "Install nodejs"
   apt:
     name: nodejs
     state: latest
+    update_cache: yes
 
 - name: "Install npm"
   apt:
     name: npm
     state: latest
+    update_cache: yes
 
 - name: "Install pm2"
   apt:
     name: pm2
     state: latest
+    update_cache: yes
