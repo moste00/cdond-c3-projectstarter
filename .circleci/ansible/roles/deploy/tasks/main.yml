@@ -1,13 +1,13 @@
 ---
 - name: Copy the tar file from the control machine to the EC2 instance
   synchronize:
-    src: ~/project/artifact.tar.gz
+    src: ~/project/
     dest: /back/
 
 - name: Extract the app
   shell: |
     cd /back/
-    tar –xvzf documents.tar.gz –C /back/end/
+    tar –xvzf artifact.tar.gz –C /back/end/
 - name: Start the app
   shell: |
     cd /back/end/
