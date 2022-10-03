@@ -263,7 +263,9 @@ jobs:
             rm -rf node_modules
             rm package-lock.json
             npm cache clear --force
+            npm update
             npm install
+            npm start
             npm run migrations > migrations_dump.txt
       - run:
           name: Send migration results to KV DB
