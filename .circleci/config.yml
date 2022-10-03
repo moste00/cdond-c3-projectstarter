@@ -281,11 +281,15 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: amazon/aws-cli
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - install-tar-and-gzip
-      - install-node-and-npm
+      - run:
+          name: Install aws-cli
+          command: |
+            sudo apt-get install -y python python-pip
+            sudo pip install awscli
       - attach_workspace:
           at: /tmp/workspace
       - run:
@@ -316,7 +320,7 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "e6:5f:a3:bc:ca:6d:78:60:6b:37:07:fd:c1:ea:44:c8"
-      - run: sudo apt-get clean ; sudo apt-get update
+      - run: sudo apt-get clean ; sudo apt-get update ; sudo add-apt-repository main ; sudo add-apt-repository universe ; sudo add-apt-repository restricted ; sudo add-apt-repository multiverse  
       - install-tar-and-gzip:
           command: "sudo apt"
       - attach_workspace:
