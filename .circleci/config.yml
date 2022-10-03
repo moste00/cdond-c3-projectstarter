@@ -284,7 +284,8 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - install-tar-and-gzip
+      - install-tar-and-gzip:
+          command: "sudo apt"
       - run:
           name: Install aws-cli
           command: |
@@ -320,13 +321,21 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "e6:5f:a3:bc:ca:6d:78:60:6b:37:07:fd:c1:ea:44:c8"
-      - run: sudo apt-get clean ; sudo apt-get update ; sudo add-apt-repository main ; sudo add-apt-repository universe ; sudo add-apt-repository restricted ; sudo add-apt-repository multiverse  
       - install-tar-and-gzip:
           command: "sudo apt"
       - attach_workspace:
           at: /tmp/workspace
-      - install-ansible:
-          command: "sudo apt"
+      - run:
+          name: Install ssh
+          command: |
+            sudo apt install -y openssh-server
+            sudo apt install -y openssh-clients
+      - run:
+          name: Install python3 
+          command: sudo apt install -y python3
+      - run:
+          name: Install Ansible using pip 
+          command: python3 -m pip install --upgrade --user ansible 
       - run:
           name: Deploy backend
           command: |
