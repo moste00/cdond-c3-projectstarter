@@ -14,7 +14,7 @@ commands:
     parameters:
       command:
         default: yum
-        decription: The name of the command to be invoked for installation
+        description: The name of the command to be invoked for installation
         type: enum
         enum: ["apt","yum"]
     steps:
@@ -29,7 +29,7 @@ commands:
     parameters:
       command:
         default: yum
-        decription: The name of the command to be invoked for installation
+        description: The name of the command to be invoked for installation
         type: enum
         enum: ["apt","yum"]
     steps:
@@ -254,7 +254,7 @@ jobs:
           command: apt install -y curl
       - run:
           name: Install aws-cli
-          comman: apt install -y awscli
+          command: apt install -y awscli
       - run:
           name: Run migrations
           command: |
