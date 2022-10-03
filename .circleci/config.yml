@@ -9,6 +9,7 @@ commands:
           command: |
             yum install -y nodejs
             yum install -y npm
+  
   install-tar-and-gzip:
     description: Ensure tar and gzip exist
     parameters:
@@ -16,7 +17,7 @@ commands:
         default: yum
         description: The name of the command to be invoked for installation
         type: enum
-        enum: ["apt","yum"]
+        enum: ["apt","yum", "sudo apt"]
     steps:
       - run:
           name: Install tar with the provided command
@@ -24,6 +25,7 @@ commands:
       - run:
           name: Install gzip with the provided command
           command: << parameters.command >> install -y gzip
+  
   install-ansible:
     description: Ensure Ansible exists
     parameters:
@@ -31,7 +33,7 @@ commands:
         default: yum
         description: The name of the command to be invoked for installation
         type: enum
-        enum: ["apt","yum"]
+        enum: ["apt","yum","sudo apt"]
     steps:
       - run:
           name: Install ssh using the provided installation command
@@ -251,10 +253,10 @@ jobs:
           keys: [backend-build]
       - run:
           name: Install curl
-          command: apt install -y curl
+          command: sudo apt install -y curl
       - run:
           name: Install aws-cli
-          command: apt install -y awscli
+          command: sudo apt install -y awscli
       - run:
           name: Run migrations
           command: |
@@ -310,11 +312,11 @@ jobs:
           fingerprints:
             - "e6:5f:a3:bc:ca:6d:78:60:6b:37:07:fd:c1:ea:44:c8"
       - install-tar-and-gzip:
-          command: apt
+          command: "sudo apt"
       - attach_workspace:
           at: /tmp/workspace
       - install-ansible:
-          command: apt
+          command: "sudo apt"
       - run:
           name: Deploy backend
           command: |
