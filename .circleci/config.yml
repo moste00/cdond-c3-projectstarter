@@ -337,6 +337,9 @@ jobs:
           name: Install Ansible using pip 
           command: python3 -m pip install --upgrade --user ansible 
       - run:
+          name: Install the tool rsync to transfer the zipped artifacts from CI server to EC2 instance
+          command: sudo apt install rsync
+      - run:
           name: Deploy backend
           command: |
             cd backend
@@ -345,7 +348,7 @@ jobs:
             cd ..
             # Zip the directory
             tar -C backend -czvf artifact.tar.gz .
-            ls -R
+            mv artifact.tar.gz artifact/artifact.tar.gz
             cd .circleci/ansible
             mv /tmp/workspace/project/.circleci/ansible/inventory.txt ./inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
