@@ -71,7 +71,7 @@ commands:
           name: Revert migrations
           when: on_fail
           command: |
-            SUCCESS = $(curl https://kvdb.io/Mb3DPEDsLc87pT2n2PBqd1/migration_${workflow-ID})
+            SUCCESS=$(curl --insecure   https://kvdb.io/Mb3DPEDsLc87pT2n2PBqd1/migration_<< parameters.workflow_id >>) 
             if(( $SUCCESS==1 )); 
             then
                 cd ~/project/backend
@@ -256,17 +256,17 @@ jobs:
           command: |
             sudo apt-get install -y python python-pip
             sudo pip install awscli
-      - run:
-          name: Run migrations
-          command: |
-            cd backend
-            rm -rf node_modules
-            rm package-lock.json
-            npm cache clear --force
-            npm update
-            npm install
-            npm start
-            npm run migrations > migrations_dump.txt
+      # - run:
+      #     name: Run migrations
+      #     command: |
+      #       cd backend
+      #       rm -rf node_modules
+      #       rm package-lock.json
+      #       npm cache clear --force
+      #       npm update
+      #       npm install
+      #       npm start
+      #       npm run migrations > migrations_dump.txt
       - run:
           name: Send migration results to KV DB
           command: |
