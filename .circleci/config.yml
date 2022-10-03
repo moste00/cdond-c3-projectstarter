@@ -7,6 +7,8 @@ commands:
       - run:
           name: Install NodeJS and NPM
           command: |
+            yum update
+            yum install epel-release
             yum install -y nodejs
             yum install -y npm
   
@@ -314,6 +316,7 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "e6:5f:a3:bc:ca:6d:78:60:6b:37:07:fd:c1:ea:44:c8"
+      - run: sudo apt-get clean ; sudo apt-get update
       - install-tar-and-gzip:
           command: "sudo apt"
       - attach_workspace:
