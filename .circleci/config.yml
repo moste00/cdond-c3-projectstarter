@@ -331,8 +331,8 @@ jobs:
             sudo apt install -y openssh-server
             sudo apt install -y openssh-client
       - run:
-          name: Install python3 
-          command: sudo apt install -y python3
+          name: Install python3 and pip
+          command: sudo apt install -y python3 ; sudo apt install python3-pip
       - run:
           name: Install Ansible using pip 
           command: python3 -m pip install --upgrade --user ansible 
