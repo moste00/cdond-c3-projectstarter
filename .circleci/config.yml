@@ -298,7 +298,7 @@ jobs:
           command: |
             export BACKEND_IP=(tail /tmp/workspace/project/.circleci/ansible/inventory.txt)
             export API_URL="http://${BACKEND_IP}:3030"
-            echo "API_URL="${API_URL}" >> frontend/.env
+            echo "API_URL=${API_URL}" >> frontend/.env
             cat frontend/.env
       - run:
           name: Deploy frontend objects
@@ -329,7 +329,7 @@ jobs:
           name: Install ssh
           command: |
             sudo apt install -y openssh-server
-            sudo apt install -y openssh-clients
+            sudo apt install -y openssh-client
       - run:
           name: Install python3 
           command: sudo apt install -y python3
