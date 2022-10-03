@@ -256,7 +256,9 @@ jobs:
           command: sudo apt install -y curl
       - run:
           name: Install aws-cli
-          command: sudo apt install -y awscli
+          command: |
+            sudo apt-get install -y python python-pip
+            sudo pip install awscli
       - run:
           name: Run migrations
           command: |
