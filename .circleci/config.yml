@@ -252,9 +252,6 @@ jobs:
       - restore_cache:
           keys: [backend-build]
       - run:
-          name: Install curl
-          command: sudo apt install -y curl
-      - run:
           name: Install aws-cli
           command: |
             sudo apt-get install -y python python-pip
@@ -263,11 +260,10 @@ jobs:
           name: Run migrations
           command: |
             cd backend
+            rm -rf node_modules
+            rm package-lock.json
+            npm cache clear --force
             npm install
-            npm audit fix --audit-level=critical --force
-            npm audit fix --audit-level=critical --force
-            npm audit fix --audit-level=critical --force
-            npm audit fix --audit-level=critical --force
             npm run migrations > migrations_dump.txt
       - run:
           name: Send migration results to KV DB
@@ -291,7 +287,6 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            # your code here
             export BACKEND_IP=(tail /tmp/workspace/project/.circleci/ansible/inventory.txt)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "API_URL="${API_URL}" >> frontend/.env
