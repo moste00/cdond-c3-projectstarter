@@ -5,26 +5,47 @@ commands:
     description: Ensure NodeJS and NPM exist
     steps:
       - run:
+          name: Install NodeJS and NPM
           command: |
             yum install -y nodejs
             yum install -y npm
   install-tar-and-gzip:
     description: Ensure tar and gzip exist
+    parameters:
+      command:
+        default: yum
+        decription: The name of the command to be invoked for installation
+        type: enum
+        enum: ["apt","yum"]
     steps:
       - run:
-          command: |
-            yum install -y tar 
-            yum install -y gzip
+          name: Install tar with the provided command
+          command: << parameters.command >> install -y tar 
+      - run:
+          name: Install gzip with the provided command
+          command: << parameters.command >> install -y gzip
   install-ansible:
     description: Ensure Ansible exists
+    parameters:
+      command:
+        default: yum
+        decription: The name of the command to be invoked for installation
+        type: enum
+        enum: ["apt","yum"]
     steps:
       - run:
+          name: Install ssh using the provided installation command
           command: |
-            yum install -y openssh
-            yum install -y openssh-server
-            yum install -y openssh-clients
-            yum install -y python3
-            python3 -m pip install --upgrade --user ansible 
+            << parameters.command >> install -y openssh
+            << parameters.command >> install -y openssh-server
+            << parameters.command >> install -y openssh-clients
+      - run:
+          name: Install python3 using the provided installation command
+          command: << parameters.command >> install -y python3
+      - run:
+          name: Install Ansible using pip 
+          command: python3 -m pip install --upgrade --user ansible 
+
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
@@ -230,7 +251,10 @@ jobs:
           keys: [backend-build]
       - run:
           name: Install curl
-          command: yum install -y curl
+          command: apt install -y curl
+      - run:
+          name: Install aws-cli
+          comman: apt install -y awscli
       - run:
           name: Run migrations
           command: |
@@ -285,10 +309,12 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "e6:5f:a3:bc:ca:6d:78:60:6b:37:07:fd:c1:ea:44:c8"
-      - install-tar-and-gzip
+      - install-tar-and-gzip:
+          command: apt
       - attach_workspace:
           at: /tmp/workspace
-      - install-ansible
+      - install-ansible:
+          command: apt
       - run:
           name: Deploy backend
           command: |
