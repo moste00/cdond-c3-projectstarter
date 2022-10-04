@@ -7,6 +7,8 @@
     dest: /back/
 
 - name: Extract the app
+  become: true
+  become_user: root
   shell: |
     cd /back/
     mkdir end
