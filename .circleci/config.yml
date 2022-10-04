@@ -60,6 +60,7 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
+            aws s3 rm "s3://udapeople-<< parameters.workflow-ID >>" --recursive --region=us-east-1
             aws cloudformation delete-stack --stack-name "udapeople-frontend-<< parameters.workflow-ID >>" --region=us-east-1
             aws cloudformation delete-stack --stack-name "udapeople-backend-<< parameters.workflow-ID >>"  --region=us-east-1
 
@@ -348,7 +349,7 @@ jobs:
             cd ..
             # Zip the directory
             tar -C backend -czvf artifact.tar.gz .
-            mv artifact.tar.gz artifact/artifact.tar.gz
+            mv artifact.tar.gz ./artifact/artifact.tar.gz
             cd .circleci/ansible
             mv /tmp/workspace/project/.circleci/ansible/inventory.txt ./inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
