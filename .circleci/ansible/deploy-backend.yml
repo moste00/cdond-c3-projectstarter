@@ -16,5 +16,17 @@
       apt:
         name: rsync
         state: latest
+    - name: "Install tar to be able to extract zipped artifacts"
+      become: true 
+      become_method: sudo
+      apt:
+        name: tar
+        state: latest
+    - name: "Install gzip to be able to extract the zipped artifacts"
+      become: true 
+      become_method: sudo
+      apt:
+        name: gzip
+        state: latest
   roles:
     - deploy
