@@ -9,7 +9,7 @@
 - name: Extract the app
   shell: |
     cd /back/
-    tar –xvzf artifact.tar.gz –C /back/end/
+    tar xvzf artifact.tar.gz -C /back/end/
 - name: Start the app
   shell: |
     cd /back/end/
