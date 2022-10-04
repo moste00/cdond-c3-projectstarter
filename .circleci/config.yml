@@ -335,6 +335,9 @@ jobs:
           name: Install python3 and pip
           command: sudo apt install -y python3 ; sudo apt install python3-pip
       - run:
+          name: Install aws-cli
+          command: sudo pip install awscli
+      - run:
           name: Install Ansible using pip 
           command: python3 -m pip install --upgrade --user ansible 
       - run:
@@ -349,6 +352,7 @@ jobs:
             cd ..
             # Zip the directory
             tar -C backend -czvf artifact.tar.gz .
+            mkdir artifact
             mv artifact.tar.gz ./artifact/artifact.tar.gz
             cd .circleci/ansible
             mv /tmp/workspace/project/.circleci/ansible/inventory.txt ./inventory.txt
