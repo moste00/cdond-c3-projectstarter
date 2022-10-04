@@ -335,8 +335,8 @@ jobs:
           name: Install python3 and pip
           command: sudo apt install -y python3 ; sudo apt install python3-pip
       - run:
-          name: Install aws-cli
-          command: sudo pip install awscli
+          name: Install aws-cli using pip
+          command: python3 -m pip install --upgrade --user ansible 
       - run:
           name: Install Ansible using pip 
           command: python3 -m pip install --upgrade --user ansible 
