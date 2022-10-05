@@ -215,7 +215,7 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: cimg/aws:2022.09
+      - image: circleci/awscli
     steps:
       - checkout
       - install-tar-and-gzip
@@ -396,7 +396,7 @@ jobs:
 
   cloudfront-update:
     docker:
-      - image: cimg/aws:2022.09
+      - image: circleci/awscli
     steps:
       - checkout
       - run:
