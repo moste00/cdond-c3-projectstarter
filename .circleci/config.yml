@@ -180,7 +180,7 @@ jobs:
 
   deploy-infrastructure:
     docker:
-      - image: cimg/aws:2022.09
+      - image: amazon/awscli
     steps:
       - checkout
       - install-tar-and-gzip
