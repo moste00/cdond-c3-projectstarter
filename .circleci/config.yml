@@ -180,7 +180,7 @@ jobs:
 
   deploy-infrastructure:
     docker:
-      - image: amazon/awscli
+      - image: amazon/aws-cli
     steps:
       - checkout
       - install-tar-and-gzip
@@ -215,7 +215,7 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: amazon/awscli
+      - image: amazon/aws-cli
     steps:
       - checkout
       - install-tar-and-gzip
@@ -238,7 +238,7 @@ jobs:
 
   run-migrations:
     docker:
-      - image: cimg/node:18.10.0
+      - image:  circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -396,7 +396,7 @@ jobs:
 
   cloudfront-update:
     docker:
-      - image: amazon/awscli
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run:
