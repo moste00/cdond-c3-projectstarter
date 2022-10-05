@@ -215,7 +215,7 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: circleci/awscli
+      - image: amazon/awscli
     steps:
       - checkout
       - install-tar-and-gzip
@@ -396,7 +396,7 @@ jobs:
 
   cloudfront-update:
     docker:
-      - image: circleci/awscli
+      - image: amazon/awscli
     steps:
       - checkout
       - run:
