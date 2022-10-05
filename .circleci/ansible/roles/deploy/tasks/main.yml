@@ -13,7 +13,10 @@
     cd /back/
     mkdir end
     tar xvzf artifact.tar.gz -C /back/end/
+    
 - name: Start the app
+  become: true
+  become_user: root
   shell: |
     cd /back/end/
     npm install
