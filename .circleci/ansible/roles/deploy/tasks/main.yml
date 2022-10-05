@@ -1,24 +1,31 @@
 ---
 - name: Copy the tar file from the control machine to the EC2 instance
-  become: true
-  become_user: root
   synchronize:
     src: ~/project/artifact/
-    dest: /back/
+    dest: ~/back/
 
 - name: Extract the app
-  become: true
-  become_user: root
   shell: |
-    cd /back/
+    cd ~/back/
     mkdir end
-    tar xvzf artifact.tar.gz -C /back/end/
-    
+    tar xvzf artifact.tar.gz -C ~/back/end/
+
 - name: Start the app
-  become: true
-  become_user: root
+  args:
+    chdir: ~/back/end/dist
+  environment:
+    ENVIRONMENT: production
+    TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
+    TYPEORM_MIGRATIONS_DIR: "./migrations"
+    TYPEORM_MIGRATIONS: "./migrations/*.js"
+    TYPEORM_ENTITIES: "./modules/domain/**/*.entity.js"
+    TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST') }}"
+    TYPEORM_PORT: "{{ lookup('env', 'TYPEORM_PORT') }}"
+    TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME') }}"
+    TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
+    TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE') }}"
+
   shell: |
-    cd /back/end/
     npm install
     pm2 stop default
     pm2 start npm -- start
