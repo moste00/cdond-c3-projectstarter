@@ -365,7 +365,9 @@ jobs:
           at: /tmp/workspace
       - run:
           name: Installing awscli
-          command: sudo apt install awscli
+          command: |
+            sudo apt update
+            sudo apt install -y awscli
       - run:
           name: Backend smoke test.
           command: |
