@@ -435,15 +435,12 @@ jobs:
       - run:
           name: Remove old stacks and files
           command: |
-            if $(aws s3 ls "udapeople-${OldWorkflowID}" --region us-east-1) | grep -q "NoSuchBucket"
-              then
-                : #No buckets to delete
-              else
-                aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive --region=us-east-1
-                aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}" --region=us-east-1
-                aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"  --region=us-east-1
+            if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
+            then
+              aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive --region=us-east-1 || true
+              aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}" --region=us-east-1 || true
+              aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"  --region=us-east-1 || true
             fi
-
             
 
 workflows:
