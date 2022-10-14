@@ -403,7 +403,7 @@ jobs:
             aws cloudformation deploy \
                         --template-file .circleci/files/cloudfront.yml \
                         --stack-name DeploymentStack \
-                        --parameter-overrides WorkflowID="udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
+                        --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
                         --tags project=udapeople --region=us-east-1
       - destroy-environment:
           workflow-ID: "${CIRCLE_WORKFLOW_ID:0:7}"  
