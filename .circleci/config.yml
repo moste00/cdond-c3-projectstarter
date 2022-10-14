@@ -435,7 +435,7 @@ jobs:
       - run:
           name: Remove old stacks and files
           command: |
-            if aws s3 ls "udapeople-${OldWorkflowID}" --region us-east-1 | grep -q "NoSuchBucket"
+            if $(aws s3 ls "udapeople-${OldWorkflowID}" --region us-east-1) | grep -q "NoSuchBucket"
               then
                 : #No buckets to delete
               else
