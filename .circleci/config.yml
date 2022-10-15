@@ -432,14 +432,22 @@ jobs:
                                  --stack-status-filter CREATE_COMPLETE \
                                  --no-paginate --output text --region=us-east-1)) 
             echo Stack names: "${STACKS[@]}"  
+
+            echo #!/bin/sh >vars.sh
+            echo OldWorkflowID="${OldWorkflowID}" >>vars.sh
+            echo STACKS="${STACKS}" >>vars.sh
       - run:
           name: Remove old stacks and files
           command: |
+            echo ${OldWorkflowID}
+            echo ${STACKS}
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
-              aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive --region=us-east-1 || true
-              aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}" --region=us-east-1 || true
-              aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"  --region=us-east-1 || true
+              #For this to succeed, the bucket has to be created from the circleci
+              #For this to succeed, OldWorkflowID has to exist and be defined
+              aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive --region=us-east-1
+              aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}" --region=us-east-1 
+              aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"  --region=us-east-1
             fi
             
 
