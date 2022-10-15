@@ -439,6 +439,7 @@ jobs:
       - run:
           name: Remove old stacks and files
           command: |
+            source vars.sh
             echo ${OldWorkflowID}
             echo ${STACKS}
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
