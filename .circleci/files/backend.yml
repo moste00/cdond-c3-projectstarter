@@ -8,7 +8,7 @@ Parameters:
 
 Resources:
   InstanceSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
+    Type: AWS::EC2::SecurityGroupss
     Properties:
       GroupName: !Sub UdaPeople-${ID}
       GroupDescription: Allow port 22 for the ssh access and port 3030 for the node server. Also port 9100 for prometheus
