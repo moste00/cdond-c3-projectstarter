@@ -441,7 +441,7 @@ jobs:
           command: |
             cat vars.sh
             source vars.sh
-            if [[ "${CIRCLE_WORKFLOW_ID:0:7}" =~ "${OldWorkflowID}" ]]
+            if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
             then
               aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive --region=us-east-1
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}" --region=us-east-1 
