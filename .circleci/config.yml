@@ -254,7 +254,10 @@ jobs:
           command: |
             cd backend
             npm install
-            npm run typeorm migration:run > migrations_dump.txt
+            ls -r 
+            npm run build
+            ls -r
+            npm run migrations > migrations_dump.txt
             cat migrations_dump.txt
       - run:
           name: Send migration results to KV DB
