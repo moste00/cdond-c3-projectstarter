@@ -254,7 +254,6 @@ jobs:
           command: |
             cd backend
             npm install
-            ls ./dist/src/migrations
             npm run build
             ls ./dist/src/migrations
             npm run migrations > migrations_dump.txt
